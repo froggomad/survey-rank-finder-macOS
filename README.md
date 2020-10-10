@@ -26,7 +26,7 @@
     <img src="images/survey-vip-finder.jpeg" alt="Survey VIP Finder Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Survey Rank VIP Finder for MacOS</h3>
+  <h3 align="center">Survey VIP Finder for MacOS</h3>
 
   <p align="center">
     Parse and display survey results based on customers who engage the most, following the 80/20 rule. The survey is in .csv format
