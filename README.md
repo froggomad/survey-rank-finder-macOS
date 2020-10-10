@@ -31,7 +31,7 @@
   <p align="center">
     Parse and display survey results based on customers who engage the most, following the 80/20 rule. The survey is in .csv format
     <br />
-    <a href="https://github.com/froggomad/survey-rank-finder-macOS/docs"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/froggomad/survey-rank-finder-macOS/tree/master/docs"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <!-- <a href="https://github.com/froggomad/survey-rank-finder-macOS">View Demo</a>
@@ -85,7 +85,7 @@ git clone https://github.com/froggomad/survey-rank-finder-macOS.git
 ## Usage
 
 * Run the app
-:construction_worker: more to come :construction_worker:
+* :construction_worker: more to come :construction_worker:
 
 <!-- ROADMAP -->
 ## Roadmap
