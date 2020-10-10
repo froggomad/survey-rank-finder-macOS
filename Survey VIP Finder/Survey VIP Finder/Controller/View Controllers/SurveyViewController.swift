@@ -64,9 +64,9 @@ class SurveyViewController: NSViewController {
     // MARK: - CSV Handling -
     /// Parse the loaded CSV file and refresh the tableView
     @objc private func loadCSV() {
-        // create CSV
-        // parse CSV
-        // add CSV rows to datasource
+        // create CSV object
+        // parse
+        // add rows to datasource
         // refresh tableview
     }
 
@@ -81,6 +81,7 @@ class SurveyViewController: NSViewController {
         // reload using current sorting
     }
 
+    // MARK: - Helper Methods -
     /// Use an identifier to get a toolbarItem
     /// - Parameter identifier: the toolbarItem's identifier
     /// - Returns: an optional `NSToolbarItem` from the current ViewController
