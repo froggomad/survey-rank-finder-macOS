@@ -123,5 +123,5 @@ Project Link: [https://github.com/froggomad/survey-rank-finder-macOS](https://gi
 [license-shield]: https://img.shields.io/github/license/froggomad/repo.svg?style=flat-square
 [license-url]: https://github.com/froggomad/survey-rank-finder-macOS/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/kennydubroff
+[linkedin-url]: https://linkedin.com/in/kenny-dubroff
 [product-screenshot]: images/screenshot.png
