@@ -13,7 +13,7 @@
 
 `required`
 - [ ] tested locally
-- [ ] [updated the docs](https://github.com/froggomad/survey-rank-finder-macOS/blob/master/.github/documentation_standards.md)
+- [ ] updated the docs
 
 `optional`
 - [ ] added new dependencies
