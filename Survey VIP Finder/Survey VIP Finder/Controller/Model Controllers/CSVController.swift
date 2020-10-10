@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// common methods for working with .csv files
 class CSVController {
     
 }

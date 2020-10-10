@@ -6,7 +6,9 @@
 //
 
 import Foundation
+// FUTURE: save prior results if that's useful (top n customers all time?)
 
+/// Store information about the current Survey
 struct Survey: Codable {
     
 }

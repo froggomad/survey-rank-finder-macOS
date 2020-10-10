@@ -6,7 +6,7 @@
 //
 
 import Cocoa
-
+/// The app's initial view
 class SurveyViewController: NSViewController {
 
     override func viewDidLoad() {
