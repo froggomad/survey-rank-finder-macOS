@@ -10,11 +10,13 @@
 		B91D81D825313DA20039EB77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81D725313DA20039EB77 /* AppDelegate.swift */; };
 		B91D81DA25313DA20039EB77 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81D925313DA20039EB77 /* SurveyViewController.swift */; };
 		B91D81DC25313DA30039EB77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B91D81DB25313DA30039EB77 /* Assets.xcassets */; };
-		B91D81DF25313DA30039EB77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91D81DD25313DA30039EB77 /* Main.storyboard */; };
 		B91D81F425313EA50039EB77 /* CSVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81F325313EA50039EB77 /* CSVController.swift */; };
 		B91D81FA25313F2E0039EB77 /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81F925313F2E0039EB77 /* Survey.swift */; };
 		B91D81FF253140DE0039EB77 /* SurveyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81FE253140DE0039EB77 /* SurveyTableViewCell.swift */; };
 		B91F972725326428002990F1 /* Survey_VIP_FinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91F972625326428002990F1 /* Survey_VIP_FinderUITests.swift */; };
+		B91F973A25328296002990F1 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81D925313DA20039EB77 /* SurveyViewController.swift */; };
+		B91F974B253285B0002990F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91D81DD25313DA30039EB77 /* Main.storyboard */; };
+		B91F9750253285B2002990F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91D81DD25313DA30039EB77 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -241,7 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B91D81DC25313DA30039EB77 /* Assets.xcassets in Resources */,
-				B91D81DF25313DA30039EB77 /* Main.storyboard in Resources */,
+				B91F974B253285B0002990F1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +251,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B91F9750253285B2002990F1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B91F973A25328296002990F1 /* SurveyViewController.swift in Sources */,
 				B91F972725326428002990F1 /* Survey_VIP_FinderUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
