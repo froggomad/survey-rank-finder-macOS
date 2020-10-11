@@ -9,7 +9,8 @@ import Cocoa
 /// The app's initial view
 class SurveyViewController: NSViewController {
     // MARK: - Outlets -
-    @IBOutlet var tableView: NSScrollView!
+    @IBOutlet var tableView: NSTableView!
+
     var loadButton: NSToolbarItem?
     var sortButton: NSToolbarItem?
     var refreshButton: NSToolbarItem?
@@ -22,7 +23,7 @@ class SurveyViewController: NSViewController {
     /// The currently selected CSV file's path
     var filePath: String? {
         didSet {
-            loadCSV()
+            displayCSV()
         }
     }
 
@@ -62,12 +63,17 @@ class SurveyViewController: NSViewController {
     }
 
     // MARK: - CSV Handling -
-    /// Parse the loaded CSV file and refresh the tableView
-    @objc private func loadCSV() {
+    private func displayCSV() {
+        print(filePath)
         // create CSV object
         // parse
         // add rows to datasource
         // refresh tableview
+    }
+    
+    /// Parse the loaded CSV file and refresh the tableView
+    @objc private func loadCSV() {
+        displayFileDialogAndSetPath()
     }
 
     /// Sort the loaded CSV file using the 80/20 rule
@@ -90,6 +96,34 @@ class SurveyViewController: NSViewController {
         self.view.window?.toolbar?.items.filter {
             $0.itemIdentifier == identifier
         }.first
+    }
+
+    private func displayFileDialogAndSetPath() {
+        let dialog = NSOpenPanel();
+        // FIXME: Show title
+        dialog.title                   = "Open a .csv file";
+        dialog.showsHiddenFiles        = true;
+        // this may not be necessary since we're explicitly allowing .csv only
+        dialog.canChooseDirectories    = false;
+        // probably not necessary to allow, but couldn't hurt and might be useful
+        dialog.canCreateDirectories    = true;
+        dialog.allowsMultipleSelection = false;
+        dialog.allowedFileTypes        = ["csv"];
+        // present the dialog and handle what the user does
+        if (dialog.runModal() == NSApplication.ModalResponse.OK) {
+            // the result of the user's action
+            // includes filepath if not nil
+            guard let result = dialog.url else {
+                print("problem retrieving dialog's response")
+                return
+            }
+
+            let path = result.path
+            filePath = path
+        } else {
+            // User cancelled
+            return
+        }
     }
 
 }
