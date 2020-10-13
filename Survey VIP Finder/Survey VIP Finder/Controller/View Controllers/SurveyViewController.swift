@@ -16,9 +16,16 @@ class SurveyViewController: NSViewController {
     var refreshButton: NSToolbarItem?
 
     // MARK: - Properties -
+    /// The active survey
+    var survey: Survey? {
+        didSet {
+            // reload TableView
+        }
+    }
+
     /// Is the CSV being sorted using the 80/20 rule?
     var sorted: Bool = false
-    /// Have the toolbar buttons been setup?
+    /// Has the window been setup?
     var didSetup: Bool = false
     /// The currently selected CSV file's path
     var filePath: String? {
@@ -30,6 +37,8 @@ class SurveyViewController: NSViewController {
     // MARK: - View Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
 
     }
 
@@ -48,7 +57,7 @@ class SurveyViewController: NSViewController {
         }
     }
 
-    // MARK: - Toolbar Setup -
+    // MARK: - Setup Views -
     /// Set the ViewController's Toolbar properties
     private func setupToolbar() {
         // setup load button
@@ -62,15 +71,45 @@ class SurveyViewController: NSViewController {
         didSetup = true
     }
 
+    private func setupTableView() {
+        guard let cellData = survey?.cellData,
+              cellData.count > 0 else {
+            print("Couldn't get cell data to create columns")
+            return
+        }
+
+        for column in tableView.tableColumns {
+            self.tableView.removeTableColumn(column)
+        }
+
+        for (cellIndex, _) in cellData[0].enumerated() {
+            let letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+            /// repeat the letter this number of times for the column's identifier
+            let numLetters: Int = cellIndex / letters.count + 1
+            let letterIndex = cellIndex % letters.count
+
+            let columnTitle = String(repeating: letters[letterIndex], count: numLetters).uppercased()
+            let columnId = NSUserInterfaceItemIdentifier(rawValue:"\(cellIndex)")
+            let column = NSTableColumn(identifier: columnId)
+            column.title = columnTitle
+            
+            tableView.addTableColumn(column)
+        }
+
+    }
+
     // MARK: - CSV Handling -
     private func displayCSV() {
-        print(filePath)
-        // create CSV object
-        // parse
-        // add rows to datasource
-        // refresh tableview
+        guard let path = filePath else {
+            print("File path unavailable")
+            return
+        }
+        survey = Survey(filePath: path)
+        survey?.read()
+        setupTableView()
+        tableView.reloadData()
     }
-    
+
     /// Parse the loaded CSV file and refresh the tableView
     @objc private func loadCSV() {
         displayFileDialogAndSetPath()
@@ -124,6 +163,44 @@ class SurveyViewController: NSViewController {
             // User cancelled
             return
         }
+    }
+
+}
+
+extension SurveyViewController: NSTableViewDataSource {
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        survey?.cellData.count ?? 0
+    }
+}
+
+extension SurveyViewController: NSTableViewDelegate {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let rowData = survey?.cellData[row],
+              let identifier = tableColumn?.identifier.rawValue else {
+            print("couldn't load data for cell view")
+            return nil
+        }
+        guard let index = Int(identifier) else {
+            print("Couldn't create index from identifier")
+            return nil
+        }
+        if row == 1 {
+            if index == 1 {
+
+            }
+        }
+        let cellData = rowData[index]
+        var cell = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTextField
+
+        if cell == nil {
+            cell = NSTextField(labelWithString: cellData)
+            tableColumn?.minWidth = 150
+            if cellData.count > 40 {
+                tableColumn?.width = 300
+            }
+            cell!.identifier = tableColumn!.identifier // allows this new cell to be reused
+        }
+        return cell
     }
 
 }
