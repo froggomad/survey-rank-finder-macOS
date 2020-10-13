@@ -72,14 +72,20 @@ class SurveyViewController: NSViewController {
     }
 
     private func setupTableView() {
-        guard let cellData = survey?.cellData,
-              cellData.count > 0 else {
-            print("Couldn't get cell data to create columns")
-            return
-        }
 
         for column in tableView.tableColumns {
             self.tableView.removeTableColumn(column)
+        }
+
+        createHeaderTitles()
+    }
+
+    // MARK: - CSV Handling -
+    func createHeaderTitles() {
+        guard let cellData = survey?.cellData,
+            cellData.count > 0 else {
+            print("Couldn't get cell data to create columns")
+            return
         }
 
         for (cellIndex, _) in cellData[0].enumerated() {
@@ -92,13 +98,11 @@ class SurveyViewController: NSViewController {
             let columnId = NSUserInterfaceItemIdentifier(rawValue:"\(cellIndex)")
             let column = NSTableColumn(identifier: columnId)
             column.title = columnTitle
-            
+
             tableView.addTableColumn(column)
         }
-
     }
 
-    // MARK: - CSV Handling -
     private func displayCSV() {
         guard let path = filePath else {
             print("File path unavailable")
