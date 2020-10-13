@@ -20,6 +20,21 @@ class Survey_VIP_FinderTests: XCTestCase {
         XCTAssertEqual(survey.cellData[0].count, 27)
     }
 
+    func testCanCreate100ColumnsWithCorrectIds() {
+        // 100 / 26 == 3r22
+        // leaving us resting on the 4th iteration of W
+        let finalIdentifier = "WWWW"
+        let numColumns = 100
+        let letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+        /// repeat the letter this number of times for the column's identifier
+        var columnTitle = ""
+        for cellIndex in 0...numColumns {
+            let numLetters: Int = cellIndex / letters.count + 1
+            let letterIndex = cellIndex % letters.count
+            columnTitle = String(repeating: letters[letterIndex], count: numLetters).uppercased()
+        }
+        XCTAssertEqual(columnTitle, finalIdentifier)
+    }
 
 
 }
