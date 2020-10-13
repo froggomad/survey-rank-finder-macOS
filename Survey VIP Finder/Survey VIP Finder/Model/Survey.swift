@@ -18,8 +18,6 @@ struct Survey: Codable {
     mutating func read() {
         do {
             let data = try String(contentsOf: csvFileUrl)
-            let rows = data.components(separatedBy: "\r")
-            print(rows[0], rows.count)
             // https://stackoverflow.com/questions/49206930/csv-parsing-swift-4
             // split rows by comma, ignoring commas in quotes
             let pattern = "[ \t]*(?:\"((?:[^\"]|\"\")*)\"|([^,\"\r\\n]*))[ \t]*(,|\r\\n?|\\n|$)"
@@ -27,7 +25,7 @@ struct Survey: Codable {
 
             var record: [String] = []
             
-            for row in rows {
+            for row in data.components(separatedBy: "\r") {
                 // apply rules to each block matched using the above regex
                 regex.enumerateMatches(in: row, options: .anchored, range: NSRange(0..<row.utf16.count)) {match, flags, stop in
                     guard let match = match else {
@@ -35,28 +33,42 @@ struct Survey: Codable {
                         print("unable to match the pattern for this csv file")
                         return
                     }
+                    // inside quotes
                     if let quotedRange = Range(match.range(at: 1), in: row) {
                         let field = row[quotedRange].replacingOccurrences(of: "\"\"", with: "\"")
                         record.append(field)
+                    // tab?
                     } else if let range = Range(match.range(at: 2), in: row) {
                         let field = row[range].trimmingCharacters(in: .whitespaces)
                         record.append(field)
                     }
+                    // ","
                     let separator = row[Range(match.range(at: 3), in: row)!]
                     switch separator {
-                    case "": //end of text
+                    case "":
                         cellData.append(record)
                         stop.pointee = true
-                    case ",": //comma
-                        break
-                    default: //newline
-                        cellData.append(record)
                         record = []
+                    default: // comma, newline, etc
+                        break
                     }
+                }
+            }
+            // TODO: debug empty first column
+            for (i, _) in cellData.enumerated() {
+                // for some reason, the header row is unaffected
+                if i != 0 {
+                    // remove the blank field at 0
+                    cellData[i].remove(at: 0)
                 }
             }
         } catch {
             print(error)
         }
+    }
+
+    func csvString() {
+        // append "/r" to last position of each row
+        // csvData.join(",")
     }
 }
