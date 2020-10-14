@@ -24,6 +24,14 @@ class Survey_VIP_FinderTests: XCTestCase {
         XCTAssertEqual(survey.cellData[0].count, 27)
     }
 
+    func testCSVExport() {
+        let filePath = "/Users/kenny/Xcode Projects/Xcode projects/Paul_Solt/ORIGINAL FILES/Delicious Hario V60 Survey/Raw Data - First Look - 6-2-20/2020-6-2 Delicious Hario V60 SMIQ Beta Test Interest.csv"
+        var survey = Survey(filePath: filePath)
+        survey.read()
+        print(survey.csvString())
+
+    }
+
     func testCanCreate100ColumnsWithCorrectIds() {
         // 100 / 26 == 3r22
         // leaving us resting on the 4th iteration of W
