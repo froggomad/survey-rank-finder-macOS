@@ -18,6 +18,8 @@
 		B91F974B253285B0002990F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91D81DD25313DA30039EB77 /* Main.storyboard */; };
 		B91F9750253285B2002990F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91D81DD25313DA30039EB77 /* Main.storyboard */; };
 		B91F979125357271002990F1 /* Survey_VIP_FinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91F979025357271002990F1 /* Survey_VIP_FinderTests.swift */; };
+		B93B269325376F1400B24A55 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B269225376F1400B24A55 /* Row.swift */; };
+		B93B269825376FAA00B24A55 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B269725376FAA00B24A55 /* Field.swift */; };
 		B9FCBE6C25357412005AC17A /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81F925313F2E0039EB77 /* Survey.swift */; };
 		B9FCBE7025357412005AC17A /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81F925313F2E0039EB77 /* Survey.swift */; };
 /* End PBXBuildFile section */
@@ -56,6 +58,8 @@
 		B91F978E25357271002990F1 /* Survey VIP FinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Survey VIP FinderTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91F979025357271002990F1 /* Survey_VIP_FinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Survey_VIP_FinderTests.swift; sourceTree = "<group>"; };
 		B91F979225357271002990F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B93B269225376F1400B24A55 /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
+		B93B269725376FAA00B24A55 /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				B91D81F925313F2E0039EB77 /* Survey.swift */,
+				B93B269225376F1400B24A55 /* Row.swift */,
+				B93B269725376FAA00B24A55 /* Field.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -327,6 +333,8 @@
 				B91D81FF253140DE0039EB77 /* SurveyTableViewCell.swift in Sources */,
 				B91D81FA25313F2E0039EB77 /* Survey.swift in Sources */,
 				B91D81F425313EA50039EB77 /* CSVController.swift in Sources */,
+				B93B269325376F1400B24A55 /* Row.swift in Sources */,
+				B93B269825376FAA00B24A55 /* Field.swift in Sources */,
 				B91D81D825313DA20039EB77 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
