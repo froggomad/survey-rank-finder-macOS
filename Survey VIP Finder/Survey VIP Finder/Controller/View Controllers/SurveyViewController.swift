@@ -82,25 +82,40 @@ class SurveyViewController: NSViewController {
 
     // MARK: - CSV Handling -
     func createHeaderTitles() {
-        guard let cellData = survey?.cellData,
-            cellData.count > 0 else {
+        guard survey != nil,
+              let cellData = survey?.cellData,
+              cellData.count > 0 else {
             print("Couldn't get cell data to create columns")
             return
         }
 
-        for (cellIndex, _) in cellData[0].enumerated() {
+        for (cellIndex, cellStringValue) in cellData[0].enumerated() {
             let letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
             /// repeat the letter this number of times for the column's identifier
             let numLetters: Int = cellIndex / letters.count + 1
             let letterIndex = cellIndex % letters.count
 
             let columnTitle = String(repeating: letters[letterIndex], count: numLetters).uppercased()
+
+            switch cellStringValue.lowercased() {
+            case "email":
+                survey!.emailColumn = cellIndex
+            default:
+                break
+            }
+            if cellStringValue.contains("phone") {
+                survey!.phoneColumn = cellIndex
+            } else if cellStringValue.contains("email") {
+                survey!.emailColumn = cellIndex
+            } 
+
             let columnId = NSUserInterfaceItemIdentifier(rawValue:"\(cellIndex)")
             let column = NSTableColumn(identifier: columnId)
             column.title = columnTitle
 
             tableView.addTableColumn(column)
         }
+
     }
 
     private func displayCSV() {
@@ -170,7 +185,7 @@ class SurveyViewController: NSViewController {
     }
 
 }
-
+// MARK: - TableView DataSource and Delegate -
 extension SurveyViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         survey?.cellData.count ?? 0
@@ -188,11 +203,7 @@ extension SurveyViewController: NSTableViewDelegate {
             print("Couldn't create index from identifier")
             return nil
         }
-        if row == 1 {
-            if index == 1 {
 
-            }
-        }
         let cellData = rowData[index]
         var cell = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTextField
 
@@ -207,6 +218,17 @@ extension SurveyViewController: NSTableViewDelegate {
         return cell
     }
 
+    func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> String? {
+        let columnId = tableView.tableColumns.filter { $0.identifier == tableColumn?.identifier }[0].identifier.rawValue
+        guard let columnIndex = Int(columnId) else {
+            print("problem converting \(columnId) to Int")
+            return ""
+        }
+        tableView.editColumn(columnIndex, row: row, with: nil, select: true)
+        let textField = tableView.tableColumns[columnIndex].dataCell(forRow: row) as? NSTextField
+        return textField?.stringValue
+
+    }
 }
 
 // MARK: - Toolbar Identifiers -
