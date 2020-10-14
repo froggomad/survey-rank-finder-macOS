@@ -12,22 +12,25 @@ import Foundation
 struct Survey: Codable {
     let filePath: String
     var cellData: [[String]] = []
+    var rows: [Row] = []
+
     var primaryLongFormColumns: [Int] = []
     var secondaryLongFormColumns: [Int] = []
     var emailColumn: Int?
     var phoneColumn: Int?
 
+    /// Lower bounds of char count required for primary long form question column
+    /// - Note: if any column has an answer with this char count or higher
+    /// it will be considered a primary long-form question.
+    /// This logic could probably be improved to filter out edge cases...
+    /// maybe a certain percentage of answers hit this and the column
+    /// is considered a long-form question
+    static var primaryLongFormCount = 100
+    // TODO: secondaryLongForm logic (count only works for long form overall)
+
     lazy var csvFileUrl: URL = URL(fileURLWithPath: filePath)
     // 10r, 27c
     mutating func read() {
-        /// Lower bounds of char count required for primary long form question column
-        /// - Note: if any column has an answer with this char count or higher
-        /// it will be considered a primary long-form question.
-        /// This logic could probably be improved to filter out edge cases...
-        /// maybe a certain percentage of answers hit this and the column
-        /// is considered a long-form question
-        let primaryLongFormCount = 100
-        // TODO: secondaryLongForm logic (count only works for long form overall)
 
         /// Track the columnIndex as the loop iterates
         /// - Note: Initialized at -1 due to unforseen edge case (1st column empty)
@@ -58,7 +61,7 @@ struct Survey: Codable {
 
                         // TODO: Distinguish secondary long form questions
                         // TODO: Make this a method
-                        if index != 0 && field.count >= primaryLongFormCount {
+                        if index != 0 && field.count >= Survey.primaryLongFormCount {
                             if !primaryLongFormColumns.contains(columnIndex) {
                                 primaryLongFormColumns.append(columnIndex)
                             }
@@ -69,7 +72,7 @@ struct Survey: Codable {
                         record.append(field)
                         // TODO: Distinguish secondary long form questions
                         // TODO: Make this a method
-                        if index != 0 && field.count >= primaryLongFormCount {
+                        if index != 0 && field.count >= Survey.primaryLongFormCount {
                             if !primaryLongFormColumns.contains(columnIndex) {
                                 primaryLongFormColumns.append(columnIndex)
                             }
@@ -109,8 +112,18 @@ struct Survey: Codable {
                 }
             }
             print(primaryLongFormColumns.sorted(by: {$0<$1}))
+            makeRows()
         } catch {
             print("Error decoding file: \(error)")
+        }
+    }
+
+    // TODO: Refactor into read()
+    mutating func makeRows() {
+        for dataRow in self.cellData {
+            let row = Row(fields: dataRow.map { Field(text: $0) })
+            print(row.score)
+            self.rows.append(row)
         }
     }
 
