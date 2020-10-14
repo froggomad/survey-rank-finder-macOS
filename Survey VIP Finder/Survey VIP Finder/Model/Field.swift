@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Field: Codable {
+struct Field: Codable, Equatable {
     var text: String
     var score: Int
     var isLongForm: Bool
