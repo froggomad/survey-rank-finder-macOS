@@ -16,6 +16,10 @@ class Survey_VIP_FinderTests: XCTestCase {
         var survey = Survey(filePath: filePath)
         survey.read()
 
+        let primaryLongFormColumns = [1, 2, 11, 14, 15]
+        let surveyColumns = survey.primaryLongFormColumns.sorted(by: {$0 < $1})
+
+        XCTAssertEqual(surveyColumns, primaryLongFormColumns)
         XCTAssertEqual(survey.cellData.count, 10)
         XCTAssertEqual(survey.cellData[0].count, 27)
     }
@@ -26,9 +30,9 @@ class Survey_VIP_FinderTests: XCTestCase {
         let finalIdentifier = "WWWW"
         let numColumns = 100
         let letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-        /// repeat the letter this number of times for the column's identifier
         var columnTitle = ""
         for cellIndex in 0...numColumns {
+            /// repeat the letter this number of times for the column's identifier
             let numLetters: Int = cellIndex / letters.count + 1
             let letterIndex = cellIndex % letters.count
             columnTitle = String(repeating: letters[letterIndex], count: numLetters).uppercased()
