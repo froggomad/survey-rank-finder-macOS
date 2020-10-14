@@ -706,12 +706,17 @@
                                     <size key="maxSize" width="14" height="14"/>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Yru-w6-1xv"/>
+                                <toolbarItem implicitItemIdentifier="047EF4CF-C8F6-4155-86E3-CC1D02FF03CC" explicitItemIdentifier="exportToolbarButton" label="Export" paletteLabel="Export" tag="-1" image="NSFollowLinkFreestandingTemplate" id="o3K-q7-Auy">
+                                    <size key="minSize" width="14" height="14"/>
+                                    <size key="maxSize" width="14" height="14"/>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="SLP-VJ-oY3"/>
                                 <toolbarItem reference="FSH-db-QMx"/>
                                 <toolbarItem reference="nf7-ij-geF"/>
                                 <toolbarItem reference="lxc-9p-ccG"/>
+                                <toolbarItem reference="o3K-q7-Auy"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -829,7 +834,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D4e-nJ-beq">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="156" height="16"/>
+                                                                    <rect key="frame" x="0.0" y="1" width="156" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="mjw-WK-Sxj">
                                                                         <font key="font" metaFont="system"/>
@@ -881,6 +886,7 @@
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSEveryone" width="32" height="32"/>
+        <image name="NSFollowLinkFreestandingTemplate" width="14" height="14"/>
         <image name="NSRefreshFreestandingTemplate" width="14" height="14"/>
     </resources>
 </document>

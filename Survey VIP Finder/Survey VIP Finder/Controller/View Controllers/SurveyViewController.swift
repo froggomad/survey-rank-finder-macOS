@@ -14,12 +14,13 @@ class SurveyViewController: NSViewController {
     var loadButton: NSToolbarItem?
     var sortButton: NSToolbarItem?
     var refreshButton: NSToolbarItem?
+    var exportButton: NSToolbarItem?
 
     // MARK: - Properties -
     /// The active survey
     var survey: Survey? {
         didSet {
-            // reload TableView
+
         }
     }
 
@@ -60,14 +61,16 @@ class SurveyViewController: NSViewController {
     // MARK: - Setup Views -
     /// Set the ViewController's Toolbar properties
     private func setupToolbar() {
+        // setup sort button
+        sortButton = getToolbarItem(.sortToolbarButton)
         // setup load button
         loadButton = getToolbarItem(.addToolbarButton)
         loadButton?.action = #selector(loadCSV)
-        // setup sort button
-        sortButton = getToolbarItem(.sortToolbarButton)
-
         // setup refresh button
         refreshButton = getToolbarItem(.refreshToolbarButton)
+
+        exportButton = getToolbarItem(.exportToolbarButton)
+        exportButton?.action = #selector(displayFileDialogAndExportCSV)
         didSetup = true
     }
 
@@ -83,13 +86,13 @@ class SurveyViewController: NSViewController {
     // MARK: - CSV Handling -
     func createHeaderTitles() {
         guard survey != nil,
-              let cellData = survey?.cellData,
+              let cellData = survey?.rows,
               cellData.count > 0 else {
             print("Couldn't get cell data to create columns")
             return
         }
 
-        for (cellIndex, cellStringValue) in cellData[0].enumerated() {
+        for (cellIndex, field) in cellData[0].fields.enumerated() {
             let letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
             /// repeat the letter this number of times for the column's identifier
             let numLetters: Int = cellIndex / letters.count + 1
@@ -97,17 +100,14 @@ class SurveyViewController: NSViewController {
 
             let columnTitle = String(repeating: letters[letterIndex], count: numLetters).uppercased()
 
-            switch cellStringValue.lowercased() {
+            switch field.text.lowercased() {
             case "email":
                 survey!.emailColumn = cellIndex
+            case "phone":
+                survey!.phoneColumn = cellIndex
             default:
                 break
             }
-            if cellStringValue.contains("phone") {
-                survey!.phoneColumn = cellIndex
-            } else if cellStringValue.contains("email") {
-                survey!.emailColumn = cellIndex
-            } 
 
             let columnId = NSUserInterfaceItemIdentifier(rawValue:"\(cellIndex)")
             let column = NSTableColumn(identifier: columnId)
@@ -125,6 +125,7 @@ class SurveyViewController: NSViewController {
         }
         survey = Survey(filePath: path)
         survey?.read()
+        sortButton?.action = #selector(sortCSV)
         setupTableView()
         tableView.reloadData()
     }
@@ -136,7 +137,8 @@ class SurveyViewController: NSViewController {
 
     /// Sort the loaded CSV file using the 80/20 rule
     @objc private func sortCSV() {
-        sorted.toggle()
+        survey?.sort()
+        tableView.reloadData()
     }
 
     /// Load any new information in the current CSV file
@@ -145,7 +147,33 @@ class SurveyViewController: NSViewController {
         // reload using current sorting
     }
 
+    @objc private func displayFileDialogAndExportCSV() {
+        survey?.csvString(to: displaySavePanel())
+    }
+
     // MARK: - Helper Methods -
+
+    private func displaySavePanel() -> String? {
+        let dialog = NSSavePanel()
+        dialog.canCreateDirectories = true
+        dialog.showsHiddenFiles = true
+        dialog.allowedFileTypes = ["csv"]
+        dialog.nameFieldStringValue = ".csv"
+
+        if (dialog.runModal() == NSApplication.ModalResponse.OK) {
+            // the result of the user's action
+            // includes filepath if not nil
+            guard let result = dialog.url else {
+                print("problem retrieving dialog's response")
+                return nil
+            }
+            return result.path
+        } else {
+            // User cancelled
+            return nil
+        }
+    }
+
     /// Use an identifier to get a toolbarItem
     /// - Parameter identifier: the toolbarItem's identifier
     /// - Returns: an optional `NSToolbarItem` from the current ViewController
@@ -157,9 +185,12 @@ class SurveyViewController: NSViewController {
     }
 
     private func displayFileDialogAndSetPath() {
+        filePath = displayFileDialog()
+        print(filePath)
+    }
+
+    private func displayFileDialog() -> String? {
         let dialog = NSOpenPanel();
-        // FIXME: Show title
-        dialog.title                   = "Open a .csv file";
         dialog.showsHiddenFiles        = true;
         // this may not be necessary since we're explicitly allowing .csv only
         dialog.canChooseDirectories    = false;
@@ -173,28 +204,28 @@ class SurveyViewController: NSViewController {
             // includes filepath if not nil
             guard let result = dialog.url else {
                 print("problem retrieving dialog's response")
-                return
+                return nil
             }
-
-            let path = result.path
-            filePath = path
+            return result.path
         } else {
             // User cancelled
-            return
+            return nil
         }
     }
+
+
 
 }
 // MARK: - TableView DataSource and Delegate -
 extension SurveyViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        survey?.cellData.count ?? 0
+        survey?.rows.count ?? 0
     }
 }
 
 extension SurveyViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let rowData = survey?.cellData[row],
+        guard let thisRow = survey?.rows[row],
               let identifier = tableColumn?.identifier.rawValue else {
             print("couldn't load data for cell view")
             return nil
@@ -204,16 +235,19 @@ extension SurveyViewController: NSTableViewDelegate {
             return nil
         }
 
-        let cellData = rowData[index]
-        var cell = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTextField
+        let field = thisRow.fields[index]
+        print(thisRow.id)
+        let rowId = String(row)
+        let cellId = NSUserInterfaceItemIdentifier(rawValue: "\(rowId)\(identifier)")
+        var cell = tableView.makeView(withIdentifier: cellId, owner: self) as? NSTextField
 
         if cell == nil {
-            cell = NSTextField(labelWithString: cellData)
+            cell = NSTextField(labelWithString: field.text)
             tableColumn?.minWidth = 150
-            if cellData.count > 40 {
-                tableColumn?.width = 300
+            if field.isLongForm {
+                tableColumn?.width = 500
             }
-            cell!.identifier = tableColumn!.identifier // allows this new cell to be reused
+            cell!.identifier = cellId // allows this new cell to be reused
         }
         return cell
     }
@@ -237,4 +271,5 @@ extension NSToolbarItem.Identifier {
     static let addToolbarButton = NSToolbarItem.Identifier("addToolbarButton")
     static let sortToolbarButton = NSToolbarItem.Identifier("sortToolbarButton")
     static let refreshToolbarButton = NSToolbarItem.Identifier("refreshToolbarButton")
+    static let exportToolbarButton = NSToolbarItem.Identifier("exportToolbarButton")
 }
