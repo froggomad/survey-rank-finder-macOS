@@ -29,6 +29,7 @@ struct Survey: Codable {
     // TODO: secondaryLongForm logic (count only works for long form overall)
 
     lazy var csvFileUrl: URL = URL(fileURLWithPath: filePath)
+    var csvFileOut: URL?
     // 10r, 27c
     mutating func read() {
 
@@ -111,24 +112,69 @@ struct Survey: Codable {
                     cellData[i].remove(at: 0)
                 }
             }
-            print(primaryLongFormColumns.sorted(by: {$0<$1}))
             makeRows()
         } catch {
             print("Error decoding file: \(error)")
         }
     }
 
-    // TODO: Refactor into read()
     mutating func makeRows() {
-        for dataRow in self.cellData {
-            let row = Row(fields: dataRow.map { Field(text: $0) })
-            print(row.score)
+        for (i, dataRow) in self.cellData.enumerated() {
+            let row = Row(id: i, fields: dataRow.map { Field(text: $0) })
             self.rows.append(row)
         }
     }
 
-    func csvString() {
-        // append "/r" to last position of each row
-        // csvData.join(",")
+    mutating func sort() {
+        self.rows.sort(by: {$0.score > $1.score})
+    }
+
+    mutating func csvString(to filePath: String?) {
+        var outString = ""
+        for (rowIndex, row) in rows.enumerated() {
+            var thisRow = row
+
+            guard var lastPosition = row.fields.last else {
+                print("couldn't get last position of row")
+                return
+            }
+
+            for (fieldIndex, field) in row.fields.enumerated() {
+                if field.isLongForm {
+                    thisRow.fields[fieldIndex].text = "\"\(field.text)\""
+                    guard let thisFieldIndex = self.rows[rowIndex].fields.firstIndex(where: {$0 == field}) else {
+                        print("couldn't find this field in this row")
+                        continue
+                    }
+                    self.rows[rowIndex].fields.remove(at: thisFieldIndex)
+                    self.rows[rowIndex].fields.append(thisRow.fields[fieldIndex])
+                }
+            }
+
+            lastPosition.text.append("\r")
+
+            guard let lastIndex = row.fields.lastIndex(where: {$0 == row.fields.last}) else {
+                print("Couldn't get last position in row")
+                continue
+            }
+
+
+            self.rows[rowIndex].fields.remove(at: lastIndex)
+            self.rows[rowIndex].fields.append(lastPosition)
+            let fieldsText = rows[rowIndex].fields.map { $0.text }
+            
+            outString.append(fieldsText.joined(separator: ","))
+        }
+        do {
+            guard let filePath = filePath else {
+                print("couldn't get survey's file path")
+                return
+            }
+            let fileURL = URL(fileURLWithPath: filePath)
+            try outString.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            // failed to write file – bad permissions, bad filename, missing permissions, or more likely it can't be converted to the encoding
+            print("error writing file: \(error)")
+        }
     }
 }
