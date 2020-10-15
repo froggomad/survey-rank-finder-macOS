@@ -211,9 +211,6 @@ class SurveyViewController: NSViewController {
             return nil
         }
     }
-
-
-
 }
 // MARK: - TableView DataSource and Delegate -
 extension SurveyViewController: NSTableViewDataSource {
@@ -224,8 +221,8 @@ extension SurveyViewController: NSTableViewDataSource {
 
 extension SurveyViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let thisRow = survey?.rows[row],
-              let identifier = tableColumn?.identifier.rawValue else {
+        guard let identifier = tableColumn?.identifier.rawValue,
+              let title = tableColumn?.title else {
             print("couldn't load data for cell view")
             return nil
         }
@@ -234,12 +231,15 @@ extension SurveyViewController: NSTableViewDelegate {
             return nil
         }
 
-        let field = thisRow.fields[index]
-        let rowId = String(row)
-        let cellId = NSUserInterfaceItemIdentifier(rawValue: "\(rowId)\(identifier)")
-        var cell = tableView.makeView(withIdentifier: cellId, owner: self) as? NSTextField
+        guard let field = survey?.rows[row].fields[index] else {
+            print("Couldn't find field")
+            return nil
+        }
 
+        let cellId = NSUserInterfaceItemIdentifier(rawValue: "\(row):\(title)")
+        var cell = tableView.makeView(withIdentifier: cellId, owner: self) as? NSTextField
         if cell == nil {
+            print(cellId)
             cell = NSTextField(labelWithString: field.text)
             tableColumn?.minWidth = 150
             if field.isLongForm {
