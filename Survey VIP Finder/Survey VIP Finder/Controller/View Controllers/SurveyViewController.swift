@@ -186,7 +186,6 @@ class SurveyViewController: NSViewController {
 
     private func displayFileDialogAndSetPath() {
         filePath = displayFileDialog()
-        print(filePath)
     }
 
     private func displayFileDialog() -> String? {
@@ -236,7 +235,6 @@ extension SurveyViewController: NSTableViewDelegate {
         }
 
         let field = thisRow.fields[index]
-        print(thisRow.id)
         let rowId = String(row)
         let cellId = NSUserInterfaceItemIdentifier(rawValue: "\(rowId)\(identifier)")
         var cell = tableView.makeView(withIdentifier: cellId, owner: self) as? NSTextField
