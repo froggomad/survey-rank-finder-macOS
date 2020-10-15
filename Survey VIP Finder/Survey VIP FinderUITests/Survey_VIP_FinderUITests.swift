@@ -10,11 +10,20 @@ import XCTest
 
 class Survey_VIP_FinderUITests: XCTestCase {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
+    var surveyViewController: SurveyViewController!
+
+    override func setUp() {
+        super.setUp()
+        let testBundle = Bundle(for: type(of: self))
+        let storyboard = NSStoryboard(name: "Main", bundle: testBundle)
+        surveyViewController = storyboard.instantiateController(withIdentifier: "SurveyViewController") as? SurveyViewController
+        // create the view
+        _ = surveyViewController.view
     }
 
     func testCanInteractWithToolbar() {
+
+
         let app = XCUIApplication()
         app.launch()
 
@@ -26,6 +35,18 @@ class Survey_VIP_FinderUITests: XCTestCase {
         XCTAssertTrue(sortButton.isHittable)
         XCTAssertTrue(openButton.isHittable)
         XCTAssertTrue(refreshButton.isHittable)
+
+    }
+
+    func testCanOpenFileDialog() {
+        let app = XCUIApplication()
+        app.launch()
+        let window = XCUIApplication().windows["Survey VIP Finder"]
+        let openButton = window.toolbars.buttons["Open"]
+        openButton.click()
+        let dialog = app.dialogs["Open a .csv file"]
+        XCTAssertTrue(dialog.exists)
+
     }
 
     func testExample() throws {

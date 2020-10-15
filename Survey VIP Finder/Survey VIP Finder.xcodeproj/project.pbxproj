@@ -10,15 +10,33 @@
 		B91D81D825313DA20039EB77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81D725313DA20039EB77 /* AppDelegate.swift */; };
 		B91D81DA25313DA20039EB77 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81D925313DA20039EB77 /* SurveyViewController.swift */; };
 		B91D81DC25313DA30039EB77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B91D81DB25313DA30039EB77 /* Assets.xcassets */; };
-		B91D81DF25313DA30039EB77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91D81DD25313DA30039EB77 /* Main.storyboard */; };
 		B91D81F425313EA50039EB77 /* CSVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81F325313EA50039EB77 /* CSVController.swift */; };
 		B91D81FA25313F2E0039EB77 /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81F925313F2E0039EB77 /* Survey.swift */; };
 		B91D81FF253140DE0039EB77 /* SurveyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81FE253140DE0039EB77 /* SurveyTableViewCell.swift */; };
 		B91F972725326428002990F1 /* Survey_VIP_FinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91F972625326428002990F1 /* Survey_VIP_FinderUITests.swift */; };
+		B91F973A25328296002990F1 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81D925313DA20039EB77 /* SurveyViewController.swift */; };
+		B91F974B253285B0002990F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91D81DD25313DA30039EB77 /* Main.storyboard */; };
+		B91F9750253285B2002990F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91D81DD25313DA30039EB77 /* Main.storyboard */; };
+		B91F979125357271002990F1 /* Survey_VIP_FinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91F979025357271002990F1 /* Survey_VIP_FinderTests.swift */; };
+		B93B269325376F1400B24A55 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B269225376F1400B24A55 /* Row.swift */; };
+		B93B269825376FAA00B24A55 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B269725376FAA00B24A55 /* Field.swift */; };
+		B93B269C25379A0100B24A55 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B269225376F1400B24A55 /* Row.swift */; };
+		B93B269D25379A0100B24A55 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B269725376FAA00B24A55 /* Field.swift */; };
+		B93B26A125379A0200B24A55 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B269225376F1400B24A55 /* Row.swift */; };
+		B93B26A225379A0200B24A55 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B269725376FAA00B24A55 /* Field.swift */; };
+		B9FCBE6C25357412005AC17A /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81F925313F2E0039EB77 /* Survey.swift */; };
+		B9FCBE7025357412005AC17A /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91D81F925313F2E0039EB77 /* Survey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		B91F972925326428002990F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B91D81CC25313DA20039EB77 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B91D81D325313DA20039EB77;
+			remoteInfo = "Survey VIP Finder";
+		};
+		B91F979325357271002990F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B91D81CC25313DA20039EB77 /* Project object */;
 			proxyType = 1;
@@ -41,6 +59,11 @@
 		B91F972425326428002990F1 /* Survey VIP FinderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Survey VIP FinderUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91F972625326428002990F1 /* Survey_VIP_FinderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Survey_VIP_FinderUITests.swift; sourceTree = "<group>"; };
 		B91F972825326428002990F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B91F978E25357271002990F1 /* Survey VIP FinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Survey VIP FinderTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B91F979025357271002990F1 /* Survey_VIP_FinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Survey_VIP_FinderTests.swift; sourceTree = "<group>"; };
+		B91F979225357271002990F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B93B269225376F1400B24A55 /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
+		B93B269725376FAA00B24A55 /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +81,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B91F978B25357271002990F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -66,6 +96,7 @@
 			children = (
 				B91D81D625313DA20039EB77 /* Survey VIP Finder */,
 				B91F972525326428002990F1 /* Survey VIP FinderUITests */,
+				B91F978F25357271002990F1 /* Survey VIP FinderTests */,
 				B91D81D525313DA20039EB77 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -75,6 +106,7 @@
 			children = (
 				B91D81D425313DA20039EB77 /* Survey VIP Finder.app */,
 				B91F972425326428002990F1 /* Survey VIP FinderUITests.xctest */,
+				B91F978E25357271002990F1 /* Survey VIP FinderTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -139,6 +171,8 @@
 			isa = PBXGroup;
 			children = (
 				B91D81F925313F2E0039EB77 /* Survey.swift */,
+				B93B269225376F1400B24A55 /* Row.swift */,
+				B93B269725376FAA00B24A55 /* Field.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -158,6 +192,15 @@
 				B91F972825326428002990F1 /* Info.plist */,
 			);
 			path = "Survey VIP FinderUITests";
+			sourceTree = "<group>";
+		};
+		B91F978F25357271002990F1 /* Survey VIP FinderTests */ = {
+			isa = PBXGroup;
+			children = (
+				B91F979025357271002990F1 /* Survey_VIP_FinderTests.swift */,
+				B91F979225357271002990F1 /* Info.plist */,
+			);
+			path = "Survey VIP FinderTests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,6 +241,24 @@
 			productReference = B91F972425326428002990F1 /* Survey VIP FinderUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		B91F978D25357271002990F1 /* Survey VIP FinderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B91F979725357271002990F1 /* Build configuration list for PBXNativeTarget "Survey VIP FinderTests" */;
+			buildPhases = (
+				B91F978A25357271002990F1 /* Sources */,
+				B91F978B25357271002990F1 /* Frameworks */,
+				B91F978C25357271002990F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B91F979425357271002990F1 /* PBXTargetDependency */,
+			);
+			name = "Survey VIP FinderTests";
+			productName = "Survey VIP FinderTests";
+			productReference = B91F978E25357271002990F1 /* Survey VIP FinderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -211,6 +272,10 @@
 						CreatedOnToolsVersion = 12.0.1;
 					};
 					B91F972325326428002990F1 = {
+						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = B91D81D325313DA20039EB77;
+					};
+					B91F978D25357271002990F1 = {
 						CreatedOnToolsVersion = 12.0.1;
 						TestTargetID = B91D81D325313DA20039EB77;
 					};
@@ -231,6 +296,7 @@
 			targets = (
 				B91D81D325313DA20039EB77 /* Survey VIP Finder */,
 				B91F972325326428002990F1 /* Survey VIP FinderUITests */,
+				B91F978D25357271002990F1 /* Survey VIP FinderTests */,
 			);
 		};
 /* End PBXProject section */
@@ -241,11 +307,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				B91D81DC25313DA30039EB77 /* Assets.xcassets in Resources */,
-				B91D81DF25313DA30039EB77 /* Main.storyboard in Resources */,
+				B91F974B253285B0002990F1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B91F972225326428002990F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B91F9750253285B2002990F1 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B91F978C25357271002990F1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -263,6 +337,8 @@
 				B91D81FF253140DE0039EB77 /* SurveyTableViewCell.swift in Sources */,
 				B91D81FA25313F2E0039EB77 /* Survey.swift in Sources */,
 				B91D81F425313EA50039EB77 /* CSVController.swift in Sources */,
+				B93B269325376F1400B24A55 /* Row.swift in Sources */,
+				B93B269825376FAA00B24A55 /* Field.swift in Sources */,
 				B91D81D825313DA20039EB77 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,7 +347,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B93B269D25379A0100B24A55 /* Field.swift in Sources */,
+				B93B269C25379A0100B24A55 /* Row.swift in Sources */,
+				B9FCBE6C25357412005AC17A /* Survey.swift in Sources */,
+				B91F973A25328296002990F1 /* SurveyViewController.swift in Sources */,
 				B91F972725326428002990F1 /* Survey_VIP_FinderUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B91F978A25357271002990F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B91F979125357271002990F1 /* Survey_VIP_FinderTests.swift in Sources */,
+				B93B26A125379A0200B24A55 /* Row.swift in Sources */,
+				B93B26A225379A0200B24A55 /* Field.swift in Sources */,
+				B9FCBE7025357412005AC17A /* Survey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +373,11 @@
 			isa = PBXTargetDependency;
 			target = B91D81D325313DA20039EB77 /* Survey VIP Finder */;
 			targetProxy = B91F972925326428002990F1 /* PBXContainerItemProxy */;
+		};
+		B91F979425357271002990F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B91D81D325313DA20039EB77 /* Survey VIP Finder */;
+			targetProxy = B91F979325357271002990F1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -492,6 +588,46 @@
 			};
 			name = Release;
 		};
+		B91F979525357271002990F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 34P4RF23ET;
+				INFOPLIST_FILE = "Survey VIP FinderTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DevGauge.Survey-VIP-FinderTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Survey VIP Finder.app/Contents/MacOS/Survey VIP Finder";
+			};
+			name = Debug;
+		};
+		B91F979625357271002990F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 34P4RF23ET;
+				INFOPLIST_FILE = "Survey VIP FinderTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DevGauge.Survey-VIP-FinderTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Survey VIP Finder.app/Contents/MacOS/Survey VIP Finder";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -518,6 +654,15 @@
 			buildConfigurations = (
 				B91F972B25326428002990F1 /* Debug */,
 				B91F972C25326428002990F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B91F979725357271002990F1 /* Build configuration list for PBXNativeTarget "Survey VIP FinderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B91F979525357271002990F1 /* Debug */,
+				B91F979625357271002990F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
