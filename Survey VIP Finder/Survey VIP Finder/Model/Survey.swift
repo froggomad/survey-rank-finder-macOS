@@ -120,7 +120,7 @@ struct Survey: Codable {
 
     mutating func makeRows() {
         for (i, dataRow) in self.cellData.enumerated() {
-            let row = Row(id: i, fields: dataRow.map { Field(text: $0) })
+            let row = Row(id: i, fields: dataRow.map { Field(text: $0.trimmingCharacters(in: .whitespacesAndNewlines)) })
             self.rows.append(row)
         }
     }
@@ -140,15 +140,12 @@ struct Survey: Codable {
             }
 
             for (fieldIndex, field) in row.fields.enumerated() {
-                if field.isLongForm {
-                    thisRow.fields[fieldIndex].text = "\"\(field.text)\""
-                    guard let thisFieldIndex = self.rows[rowIndex].fields.firstIndex(where: {$0 == field}) else {
-                        print("couldn't find this field in this row")
-                        continue
-                    }
-                    self.rows[rowIndex].fields.remove(at: thisFieldIndex)
-                    self.rows[rowIndex].fields.append(thisRow.fields[fieldIndex])
-                }
+
+                thisRow.fields[fieldIndex].text = "\"\(field.text)\""
+                self.rows[rowIndex].fields.remove(at: fieldIndex)
+                // changed fieldIndex to thisFieldIndex to try and write cells appropriately
+                self.rows[rowIndex].fields.insert(thisRow.fields[fieldIndex], at: fieldIndex)
+
             }
 
             lastPosition.text.append("\r")
@@ -158,11 +155,10 @@ struct Survey: Codable {
                 continue
             }
 
-
             self.rows[rowIndex].fields.remove(at: lastIndex)
             self.rows[rowIndex].fields.append(lastPosition)
-            let fieldsText = rows[rowIndex].fields.map { $0.text }
-            
+
+            let fieldsText: [String] = rows[rowIndex].fields.map { $0.text }
             outString.append(fieldsText.joined(separator: ","))
         }
         do {
