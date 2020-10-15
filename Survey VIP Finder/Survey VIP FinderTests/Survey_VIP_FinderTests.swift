@@ -28,7 +28,7 @@ class Survey_VIP_FinderTests: XCTestCase {
         let filePath = "/Users/kenny/Xcode Projects/Xcode projects/Paul_Solt/ORIGINAL FILES/Delicious Hario V60 Survey/Raw Data - First Look - 6-2-20/2020-6-2 Delicious Hario V60 SMIQ Beta Test Interest.csv"
         var survey = Survey(filePath: filePath)
         survey.read()
-        print(survey.csvString())
+        survey.csvString(to: "/Users/kenny/Desktop/test999test.csv")
 
     }
 
