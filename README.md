@@ -29,7 +29,7 @@
   <h3 align="center">Survey VIP Finder for MacOS</h3>
 
   <p align="center">
-    Parse and display survey results based on customers who engage the most, following the 80/20 rule. The survey is in .csv format
+    Parse and display survey results based on customers who engage the most. The survey is in .csv format
     <br />
     <a href="https://github.com/froggomad/survey-rank-finder-macOS/tree/master/docs"><strong>Explore the docs »</strong></a>
     <br />
