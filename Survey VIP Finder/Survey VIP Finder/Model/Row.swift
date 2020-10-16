@@ -49,7 +49,12 @@ struct Row: Codable {
     private func addSMIQField() -> Field {
         let highScore = SMIQScore ?? 0
 
-        let text = String(highScore)
+        var text = String(highScore)
+
+        if id == 0 {
+            text = "SMIQ Length"
+        }
+
         return Field(text: text)
     }
 
@@ -64,12 +69,19 @@ struct Row: Codable {
         if let phoneColumn = phoneColumn {
             phoneValue = fields[phoneColumn].text
         }
-
+        
+        if id == 0 {
+            return Field(text: "Email and Phone")
+        }
         return Field(text: "\(emailValue) \n \(phoneValue)")
     }
 
     private func addScoreField() -> Field {
-        let text = String(score)
+        var text = String(score)
+
+        if id == 0 {
+            text = "Score"
+        }
         return Field(text: text)
     }
 }
