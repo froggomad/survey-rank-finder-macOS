@@ -11,7 +11,7 @@ import Foundation
 /// Store information about the current Survey
 struct Survey: Codable {
     let filePath: String
-    var cellData: [[String]] = []
+
     var rows: [Row] = []
 
     var primaryLongFormColumns: [Int] = []
@@ -44,8 +44,11 @@ struct Survey: Codable {
             let pattern = "[ \t]*(?:\"((?:[^\"]|\"\")*)\"|([^,\"\r\\n]*))[ \t]*(,|\r\\n?|\\n|$)"
             let regex = try! NSRegularExpression(pattern: pattern)
 
-            var record: [String] = []
-            let dataArray = Array(data.components(separatedBy: "\r"))
+            var record: [Field] = []
+            var dataArray = Array(data.components(separatedBy: "\r"))
+            if dataArray.count == 1 {
+                dataArray = Array(data.components(separatedBy: "\n"))
+            }
 
             for (index, row) in dataArray.enumerated() {
                 // apply rules to each block matched using the above regex
@@ -57,31 +60,31 @@ struct Survey: Codable {
                     }
                     // inside quotes
                     if let quotedRange = Range(match.range(at: 1), in: row) {
-                        let field = row[quotedRange].replacingOccurrences(of: "\"\"", with: "\"")
+                        let field = Field(text: row[quotedRange].replacingOccurrences(of: "\"\"", with: "\""))
                         record.append(field)
 
                         // TODO: Distinguish secondary long form questions
                         // TODO: Make this a method
-                        if index != 0 && field.count >= Survey.primaryLongFormCount {
+                        if index != 0 && field.text.count >= Survey.primaryLongFormCount {
                             if !primaryLongFormColumns.contains(columnIndex) {
                                 primaryLongFormColumns.append(columnIndex)
                             }
                         }
                     // tab?
                     } else if let range = Range(match.range(at: 2), in: row) {
-                        let field = row[range].trimmingCharacters(in: .whitespaces)
+                        let field = Field(text: row[range].trimmingCharacters(in: .whitespaces))
                         record.append(field)
                         // TODO: Distinguish secondary long form questions
                         // TODO: Make this a method
-                        if index != 0 && field.count >= Survey.primaryLongFormCount {
+                        if index != 0 && field.text.count >= Survey.primaryLongFormCount {
                             if !primaryLongFormColumns.contains(columnIndex) {
                                 primaryLongFormColumns.append(columnIndex)
                             }
                         }
                     }
                     // Track column
-                    if !cellData.isEmpty {
-                        let numColumns = cellData[0].count
+                    if !rows.isEmpty {
+                        let numColumns = rows[0].fields.count
                         // Why can't I do a ternary expression here?
                         // left side isn't mutable,expression evaluates to different type
                         let indexOverCount = columnIndex == numColumns
@@ -96,7 +99,8 @@ struct Survey: Codable {
                     let separator = row[Range(match.range(at: 3), in: row)!]
                     switch separator {
                     case "":
-                        cellData.append(record)
+                        let row = Row(id: index, fields: record)
+                        rows.append(row)
                         stop.pointee = true
                         record = []
                     default: // comma, newline, etc
@@ -105,23 +109,15 @@ struct Survey: Codable {
                 }
             }
             // TODO: debug empty first column
-            for (i, _) in cellData.enumerated() {
+            for (i, _) in rows.enumerated() {
                 // for some reason, the header row is unaffected
                 if i != 0 {
                     // remove the blank field at 0
-                    cellData[i].remove(at: 0)
+                    rows[i].fields.remove(at: 0)
                 }
             }
-            makeRows()
         } catch {
             print("Error decoding file: \(error)")
-        }
-    }
-
-    mutating func makeRows() {
-        for (i, dataRow) in self.cellData.enumerated() {
-            let row = Row(id: i, fields: dataRow.map { Field(text: $0.trimmingCharacters(in: .whitespacesAndNewlines)) })
-            self.rows.append(row)
         }
     }
 
@@ -148,7 +144,7 @@ struct Survey: Codable {
 
             }
 
-            lastPosition.text.append("\r")
+            lastPosition.text.append("\r\n")
 
             guard let lastIndex = row.fields.lastIndex(where: {$0 == row.fields.last}) else {
                 print("Couldn't get last position in row")
