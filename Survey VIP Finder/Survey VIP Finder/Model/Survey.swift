@@ -70,6 +70,7 @@ struct Survey: Codable {
                                 primaryLongFormColumns.append(columnIndex)
                             }
                         }
+
                     // tab?
                     } else if let range = Range(match.range(at: 2), in: row) {
                         let field = Field(text: row[range].trimmingCharacters(in: .whitespaces))
@@ -99,8 +100,15 @@ struct Survey: Codable {
                     let separator = row[Range(match.range(at: 3), in: row)!]
                     switch separator {
                     case "":
-                        let row = Row(id: index, fields: record)
+                        // TODO: Localization
+                        let phoneIndex = record.firstIndex(where: { $0.text.lowercased() == "email" })
+                        let emailIndex = record.firstIndex(where: { $0.text.lowercased() == "phone" })
+
+                        var row = Row(id: index, fields: record)
+                        row.phoneColumn = phoneIndex
+                        row.emailColumn = emailIndex
                         rows.append(row)
+
                         stop.pointee = true
                         record = []
                     default: // comma, newline, etc
@@ -143,7 +151,7 @@ struct Survey: Codable {
                 self.rows[rowIndex].fields.insert(thisRow.fields[fieldIndex], at: fieldIndex)
 
             }
-
+            // CR(\r)LF(\n)
             lastPosition.text.append("\r\n")
 
             guard let lastIndex = row.fields.lastIndex(where: {$0 == row.fields.last}) else {
