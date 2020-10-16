@@ -20,8 +20,10 @@ class SurveyViewController: NSViewController {
     /// The active survey
     var survey: Survey? {
         didSet {
+            survey?.sort()
             sortButton?.action = #selector(sortCSV)
             exportButton?.action = #selector(displayFileDialogAndExportCSV)
+            tableView.reloadData()
         }
     }
 
