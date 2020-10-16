@@ -20,7 +20,8 @@ class SurveyViewController: NSViewController {
     /// The active survey
     var survey: Survey? {
         didSet {
-
+            sortButton?.action = #selector(sortCSV)
+            exportButton?.action = #selector(displayFileDialogAndExportCSV)
         }
     }
 
@@ -52,12 +53,6 @@ class SurveyViewController: NSViewController {
         }
     }
 
-    override var representedObject: Any? {
-        didSet {
-
-        }
-    }
-
     // MARK: - Setup Views -
     /// Set the ViewController's Toolbar properties
     private func setupToolbar() {
@@ -70,7 +65,6 @@ class SurveyViewController: NSViewController {
         refreshButton = getToolbarItem(.refreshToolbarButton)
 
         exportButton = getToolbarItem(.exportToolbarButton)
-        exportButton?.action = #selector(displayFileDialogAndExportCSV)
         didSetup = true
     }
 
@@ -125,7 +119,7 @@ class SurveyViewController: NSViewController {
         }
         survey = Survey(filePath: path)
         survey?.read()
-        sortButton?.action = #selector(sortCSV)
+
         setupTableView()
         tableView.reloadData()
     }
@@ -234,15 +228,16 @@ extension SurveyViewController: NSTableViewDelegate {
             return nil
         }
 
-        guard let field = survey?.rows[row].fields[index] else {
-            print("Couldn't find field")
+        guard row < survey?.rows.count ?? 0 - 1,
+              index < survey?.rows[row].fields.count ?? 0 - 1,
+              let field = survey?.rows[row].fields[index] else {
+            print("Couldn't find field at row: \(row) column: \(index)/\(title)")
             return nil
         }
 
         let cellId = NSUserInterfaceItemIdentifier(rawValue: "\(row):\(title)")
         var cell = tableView.makeView(withIdentifier: cellId, owner: self) as? NSTextField
         if cell == nil {
-            print(cellId)
             cell = NSTextField(labelWithString: field.text)
             tableColumn?.minWidth = 150
             if field.isLongForm {
