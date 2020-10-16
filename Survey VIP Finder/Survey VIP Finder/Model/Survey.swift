@@ -101,12 +101,16 @@ struct Survey: Codable {
                     switch separator {
                     case "":
                         // TODO: Localization
-                        let phoneIndex = record.firstIndex(where: { $0.text.lowercased() == "email" })
-                        let emailIndex = record.firstIndex(where: { $0.text.lowercased() == "phone" })
+                        let emailIndex = record.firstIndex(where: {
+                                                            print($0.text.lowercased())
+                                                            return $0.text.lowercased() == "email"
+                        })
+                        let phoneIndex = record.firstIndex(where: { $0.text.lowercased() == "phone" })
 
                         var row = Row(id: index, fields: record)
                         row.phoneColumn = phoneIndex
                         row.emailColumn = emailIndex
+                        row.addFields()
                         rows.append(row)
 
                         stop.pointee = true
